@@ -86,3 +86,61 @@ CREATE TABLE IF NOT EXISTS file_permissions (
     FOREIGN KEY (file_id) REFERENCES shared_files (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
+-- Tabela do przechowywania ogólnych informacji o mediach
+CREATE TABLE IF NOT EXISTS media_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    file_path TEXT NOT NULL UNIQUE,
+    media_type TEXT NOT NULL,  -- 'video', 'audio', 'image'
+    format TEXT,
+    duration INTEGER,          -- długość w sekundach dla audio/video
+    file_size INTEGER,
+    thumbnail_path TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    last_accessed DATETIME,
+    play_count INTEGER DEFAULT 0
+);
+
+-- Tabela dla metadanych audio
+CREATE TABLE IF NOT EXISTS audio_metadata (
+    media_id INTEGER PRIMARY KEY,
+    artist TEXT,
+    album TEXT,
+    genre TEXT,
+    track_number INTEGER,
+    year INTEGER,
+    bitrate INTEGER,
+    sample_rate INTEGER,
+    FOREIGN KEY (media_id) REFERENCES media_items (id) ON DELETE CASCADE
+);
+
+-- Tabela dla metadanych wideo
+CREATE TABLE IF NOT EXISTS video_metadata (
+    media_id INTEGER PRIMARY KEY,
+    director TEXT,
+    resolution TEXT,
+    framerate FLOAT,
+    codec TEXT,
+    subtitle_paths TEXT,
+    FOREIGN KEY (media_id) REFERENCES media_items (id) ON DELETE CASCADE
+);
+
+-- Tabela playlist
+CREATE TABLE IF NOT EXISTS playlists (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    user_id INTEGER NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    modified_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
+-- Tabela elementów playlist
+CREATE TABLE IF NOT EXISTS playlist_items (
+    playlist_id INTEGER,
+    media_id INTEGER,
+    position INTEGER NOT NULL,
+    PRIMARY KEY (playlist_id, media_id),
+    FOREIGN KEY (playlist_id) REFERENCES playlists (id) ON DELETE CASCADE,
+    FOREIGN KEY (media_id) REFERENCES media_items (id) ON DELETE CASCADE
+);

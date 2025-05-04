@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Media Center - {{ app_name }}{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/media_center.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="media-center-container">
+    <div class="page-header">
+        <h1>Media Center</h1>
+        <p>Przeglądaj i odtwarzaj multimedia w sieci domowej</p>
+    </div>
+    
+    <!-- Panel nawigacyjny -->
+    <div class="media-nav">
+        <div class="media-tabs">
+            <button class="media-tab active" data-type="all">Wszystkie</button>
+            <button class="media-tab" data-type="video">Wideo</button>
+            <button class="media-tab" data-type="audio">Audio</button>
+            <button class="media-tab" data-type="image">Zdjęcia</button>
+        </div>
+        <div class="media-actions">
+            <button id="scan-media-btn" class="btn btn-primary">
+                <i class="icon">🔍</i> Skanuj media
+            </button>
+            <button id="create-playlist-btn" class="btn btn-secondary">
+                <i class="icon">📋</i> Nowa playlista
+            </button>
+        </div>
+    </div>
+    
+    <!-- Zawartość mediów -->
+    <div class="media-content">
+        <div class="media-sidebar">
+            <div class="sidebar-section">
+                <h3>Biblioteki</h3>
+                <ul class="media-libraries">
+                    <li><a href="#" data-library="local">Lokalne</a></li>
+                    <li><a href="#" data-library="network">Sieć domowa</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <h3>Playlisty</h3>
+                <ul class="media-playlists" id="playlists-list">
+                    <!-- Playlisty będą dodawane dynamicznie przez JS -->
+                </ul>
+            </div>
+        </div>
+        
+        <div class="media-main">
+            <div class="media-search">
+                <input type="text" id="media-search-input" placeholder="Szukaj mediów...">
+            </div>
+            
+            <div class="media-grid" id="media-items-grid">
+                <!-- Elementy mediów będą dodawane dynamicznie przez JS -->
+            </div>
+            
+            <div class="pagination" id="media-pagination">
+                <!-- Paginacja będzie generowana dynamicznie -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Odtwarzacz mediów -->
+    <div class="media-player" id="media-player">
+        <div class="player-controls">
+            <button class="player-btn" id="player-prev">⏮</button>
+            <button class="player-btn" id="player-play">▶️</button>
+            <button class="player-btn" id="player-next">⏭</button>
+            <div class="player-progress">
+                <div class="progress-bar" id="player-progress-bar"></div>
+            </div>
+            <div class="player-time">
+                <span id="player-current-time">0:00</span> / 
+                <span id="player-total-time">0:00</span>
+            </div>
+            <button class="player-btn" id="player-volume">🔊</button>
+            <button class="player-btn" id="player-fullscreen">⛶</button>
+        </div>
+        
+        <div class="player-container" id="player-container">
+            <!-- Odtwarzacz zostanie wstawiony tutaj przez JS -->
+        </div>
+    </div>
+</div>
+
+<!-- Modal skanowania mediów -->
+<div class="modal" id="scan-media-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Skanowanie mediów</h2>
+            <button class="close" id="close-scan-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="media-directory">Katalog z mediami</label>
+                <input type="text" id="media-directory" class="form-control" value="/media">
+            </div>
+            <div class="form-group">
+                <label for="scan-options">Opcje skanowania</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="scan-recursive" checked> Skanuj podkatalogi</label>
+                    <label><input type="checkbox" id="scan-generate-thumbnails" checked> Generuj miniatury</label>
+                </div>
+            </div>
+            <div class="scan-status" id="scan-status" style="display: none;">
+                <div class="scan-progress">
+                    <div class="progress-bar" id="scan-progress-bar"></div>
+                </div>
+                <div class="scan-info" id="scan-info"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="start-scan-btn" class="btn btn-primary">Rozpocznij skanowanie</button>
+            <button id="cancel-scan-btn" class="btn btn-danger">Anuluj</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal nowej playlisty -->
+<div class="modal" id="playlist-modal">
+    <!-- Zawartość modalu playlisty -->
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/media_center.js') }}"></script>
+{% endblock %}

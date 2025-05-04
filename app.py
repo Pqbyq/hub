@@ -10,6 +10,8 @@ import functools
 from db_helpers import get_db, close_db
 from auth_helpers import login_required, admin_required
 from config import config
+from routes.media_center import media_center_bp
+from media_helpers import init_dlna_server
 
 # Inicjalizacja aplikacji
 app = Flask(__name__, static_folder='static', template_folder='templates')
@@ -156,6 +158,12 @@ with app.app_context():
     if not os.path.exists(app.config['DATABASE']):
         init_db()
         app.logger.info("Inicjalizacja bazy danych przy pierwszym uruchomieniu")
+    if not app.debug:
+        try:
+            init_dlna_server(app.config)
+            app.logger.info("DLNA/UPnP Media Server initialized")
+        except Exception as e:
+            app.logger.error(f"Failed to initialize DLNA/UPnP Media Server: {str(e)}")
 
 # Importy blueprintów na końcu, aby uniknąć cyklicznych importów
 from routes.network import network_bp
@@ -167,6 +175,7 @@ from routes.file_sharing import file_sharing_bp  # Dodaj import blueprintu do ud
 # Rejestracja blueprintów
 app.register_blueprint(network_bp)
 app.register_blueprint(auth_bp)
+app.register_blueprint(media_center_bp)
 app.register_blueprint(user_bp)
 app.register_blueprint(weather_bp)
 app.register_blueprint(file_sharing_bp)  # Zarejestruj blueprint do udostępniania plików
