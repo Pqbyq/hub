@@ -22,8 +22,8 @@
             <div class="navbar-nav">
                 <a href="{{ url_for('dashboard') }}" class="{{ 'active' if request.endpoint == 'dashboard' else '' }}">Dashboard</a>
                 <a href="{{ url_for('network.network_details') }}" class="{{ 'active' if request.endpoint == 'network.network_details' else '' }}">Sieć</a>
-                <a href="{{ url_for('media_center.media_center_page') }}" class="{{ 'active' if request.endpoint == 'media_center.media_center_page' else '' }}">Media Center</a>
                 <a href="{{ url_for('file_sharing.file_sharing_page') }}" class="{{ 'active' if request.endpoint == 'file_sharing.file_sharing_page' else '' }}">Pliki</a>
+                <a href="{{ url_for('media_center.media_center_page') }}" class="{{ 'active' if request.endpoint == 'media_center.media_center_page' else '' }}">Media Center</a>
                 {% if g.role == 'admin' %}
                 <a href="{{ url_for('admin_panel') }}" class="{{ 'active' if request.endpoint == 'admin_panel' else '' }}">Admin</a>
                 {% endif %}
