@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+
+{% block title %}Szczegóły sieci - {{ app_name }}{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/network.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/network_grid.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Szczegóły sieci</h1>
+    <p>Monitorowanie i analiza ruchu sieciowego</p>
+</div>
+
+<div class="network-actions">
+    <button id="test-speed-btn" class="btn btn-primary">
+        <i class="icon">⚡</i> Test prędkości
+    </button>
+    <button id="scan-network-btn" class="btn btn-secondary">
+        <i class="icon">🔍</i> Skanuj sieć
+    </button>
+</div>
+
+<!-- System siatki z elastycznymi komponentami -->
+<div class="grid-container">
+    <!-- Pierwszy wiersz -->
+    <div class="grid-row">
+        <!-- Status połączenia -->
+        <div class="grid-box">
+            <div class="widget" id="connection-widget">
+                <div class="widget-header">
+                    <div class="widget-title">Status połączenia</div>
+                    <button class="widget-refresh" id="refresh-connection" title="Odśwież">
+                        <i class="icon">🔄</i>
+                    </button>
+                </div>
+                <div class="widget-content">
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <div class="status-label">Status</div>
+                            <div class="status-value" id="connection-status">-</div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-label">Czas pracy</div>
+                            <div class="status-value" id="uptime">-</div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-label">IP zewnętrzne</div>
+                            <div class="status-value" id="external-ip">-</div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-label">DNS</div>
+                            <div class="status-value" id="dns-server">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prędkość sieci -->
+        <div class="grid-box">
+            <div class="widget" id="speed-widget">
+                <div class="widget-header">
+                    <div class="widget-title">Prędkość sieci</div>
+                    <button class="widget-refresh" id="refresh-speed" title="Odśwież">
+                        <i class="icon">🔄</i>
+                    </button>
+                </div>
+                <div class="widget-content">
+                    <div class="speed-grid">
+                        <div class="speed-item">
+                            <div class="speed-label">Pobieranie</div>
+                            <div class="speed-value" id="download-speed">-</div>
+                            <div class="speed-unit">Mbps</div>
+                        </div>
+                        <div class="speed-item">
+                            <div class="speed-label">Wysyłanie</div>
+                            <div class="speed-value" id="upload-speed">-</div>
+                            <div class="speed-unit">Mbps</div>
+                        </div>
+                    </div>
+                    <div class="history-chart-container">
+                        <h3>Historia prędkości (ostatnie 24h)</h3>
+                        <div class="history-chart" id="speed-history-chart">
+                            <!-- Wykres historii prędkości -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informacje o WiFi -->
+        <div class="grid-box">
+            <div class="widget" id="wifi-widget">
+                <div class="widget-header">
+                    <div class="widget-title">Informacje o WiFi</div>
+                </div>
+                <div class="widget-content">
+                    <div class="wifi-info-grid">
+                        <div class="wifi-info-item">
+                            <div class="wifi-info-label">SSID</div>
+                            <div class="wifi-info-value" id="wifi-ssid">HomeHub_WiFi</div>
+                        </div>
+                        <div class="wifi-info-item">
+                            <div class="wifi-info-label">Kanał</div>
+                            <div class="wifi-info-value" id="wifi-channel">6</div>
+                        </div>
+                        <div class="wifi-info-item">
+                            <div class="wifi-info-label">Częstotliwość</div>
+                            <div class="wifi-info-value" id="wifi-frequency">2.4 GHz</div>
+                        </div>
+                        <div class="wifi-info-item">
+                            <div class="wifi-info-label">Siła sygnału</div>
+                            <div class="wifi-info-value" id="wifi-signal">-65 dBm</div>
+                        </div>
+                        <div class="wifi-info-item">
+                            <div class="wifi-info-label">Zabezpieczenia</div>
+                            <div class="wifi-info-value" id="wifi-security">WPA2-PSK</div>
+                        </div>
+                        <div class="wifi-info-item">
+                            <div class="wifi-info-label">Maks. prędkość</div>
+                            <div class="wifi-info-value" id="wifi-max-rate">300 Mbps</div>
+                        </div>
+                    </div>
+                    <div class="signal-strength-container">
+                        <div class="signal-strength-label">Siła sygnału WiFi:</div>
+                        <div class="signal-bars">
+                            <div class="signal-bar active" id="wifi-bar-1"></div>
+                            <div class="signal-bar active" id="wifi-bar-2"></div>
+                            <div class="signal-bar active" id="wifi-bar-3"></div>
+                            <div class="signal-bar" id="wifi-bar-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drugi wiersz -->
+    <div class="grid-row">
+        <!-- Urządzenia w sieci (zajmuje całą szerokość) -->
+        <div class="grid-box grid-box-full">
+            <div class="widget" id="devices-widget">
+                <div class="widget-header">
+                    <div class="widget-title">Urządzenia w sieci</div>
+                    <div class="widget-subtitle" id="device-count">Znaleziono 0 urządzeń</div>
+                </div>
+                <div class="widget-content">
+                    <div class="devices-actions">
+                        <div class="search-box">
+                            <input type="text" id="device-search" class="form-control" placeholder="Szukaj urządzeń...">
+                        </div>
+                        <div class="devices-filters">
+                            <button class="btn btn-sm filter-all active">Wszystkie</button>
+                            <button class="btn btn-sm filter-active">Aktywne</button>
+                            <button class="btn btn-sm filter-favorites">Ulubione</button>
+                        </div>
+                    </div>
+                    <div class="devices-table-container">
+                        <table class="network-table" id="devices-table">
+                            <thead>
+                                <tr>
+                                    <th>Nazwa urządzenia</th>
+                                    <th>Adres IP</th>
+                                    <th>Adres MAC</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Tutaj zostanie wygenerowana lista urządzeń -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trzeci wiersz -->
+    <div class="grid-row">
+        <!-- Jakość połączenia -->
+        <div class="grid-box">
+            <div class="widget" id="quality-widget">
+                <div class="widget-header">
+                    <div class="widget-title">Jakość połączenia</div>
+                </div>
+                <div class="widget-content">
+                    <div class="quality-grid">
+                        <div class="quality-item">
+                            <div class="quality-label">Ping (ms)</div>
+                            <div class="quality-value" id="ping-value">-</div>
+                            <div class="quality-meter">
+                                <div class="quality-meter-bar" id="ping-meter"></div>
+                            </div>
+                        </div>
+                        <div class="quality-item">
+                            <div class="quality-label">Jitter (ms)</div>
+                            <div class="quality-value" id="jitter-value">-</div>
+                            <div class="quality-meter">
+                                <div class="quality-meter-bar" id="jitter-meter"></div>
+                            </div>
+                        </div>
+                        <div class="quality-item">
+                            <div class="quality-label">Packet loss (%)</div>
+                            <div class="quality-value" id="packet-loss">-</div>
+                            <div class="quality-meter">
+                                <div class="quality-meter-bar" id="packet-loss-meter"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aktywność sieci (opcjonalnie) -->
+        <div class="grid-box">
+            <div class="widget" id="activity-widget">
+                <div class="widget-header">
+                    <div class="widget-title">Aktywność sieci</div>
+                </div>
+                <div class="widget-content">
+                    <div class="activity-chart-container">
+                        <div class="activity-chart" id="network-activity-chart">
+                            <!-- Wykres aktywności sieci -->
+                            <div class="placeholder-message">Dane aktywności sieci będą dostępne wkrótce</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal testu prędkości -->
+<div class="modal" id="speed-test-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Test prędkości</h2>
+            <button class="close" id="close-speed-test-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="speed-test-container">
+                <div class="speed-test-status">
+                    <div class="speed-test-phase" id="test-phase">Przygotowanie...</div>
+                    <div class="speed-test-progress">
+                        <div class="progress-bar" id="test-progress"></div>
+                    </div>
+                </div>
+                
+                <div class="speed-test-results">
+                    <div class="result-item">
+                        <div class="result-icon">📥</div>
+                        <div class="result-value" id="test-download">--</div>
+                        <div class="result-label">Download</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon">📤</div>
+                        <div class="result-value" id="test-upload">--</div>
+                        <div class="result-label">Upload</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon">📶</div>
+                        <div class="result-value" id="test-ping">--</div>
+                        <div class="result-label">Ping</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" id="start-speed-test">Rozpocznij test</button>
+            <button class="btn btn-danger" id="cancel-speed-test">Zamknij</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/network.js') }}"></script>
+<script src="{{ url_for('static', filename='js/network_grid.js') }}"></script>
+{% endblock %}

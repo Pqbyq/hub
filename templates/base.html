@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl" data-theme="{{ theme }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ app_name }}{% endblock %}</title>
+    
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    {% block styles %}{% endblock %}
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+    {% block navbar %}
+    {% if g.user_id %}
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="{{ url_for('dashboard') }}" class="navbar-brand">{{ app_name }}</a>
+            <div class="navbar-nav">
+                <a href="{{ url_for('dashboard') }}" class="{{ 'active' if request.endpoint == 'dashboard' else '' }}">Dashboard</a>
+                <a href="{{ url_for('network.network_details') }}" class="{{ 'active' if request.endpoint == 'network.network_details' else '' }}">Sieć</a>
+                <a href="{{ url_for('file_sharing.file_sharing_page') }}" class="{{ 'active' if request.endpoint == 'file_sharing.file_sharing_page' else '' }}">Pliki</a>
+                {% if g.role == 'admin' %}
+                <a href="{{ url_for('admin_panel') }}" class="{{ 'active' if request.endpoint == 'admin_panel' else '' }}">Admin</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="navbar-right">
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="theme-checkbox">
+                    <input type="checkbox" id="theme-checkbox" {{ 'checked' if theme == 'dark' else '' }}>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <a href="{{ url_for('auth.logout') }}" class="logout-btn">Wyloguj</a>
+        </div>
+    </nav>
+    {% endif %}
+    {% endblock %}
+    
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+    
+    <!-- Skrypty JavaScript -->
+    <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+    <script>
+        // Przełącznik motywu
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeCheckbox = document.getElementById('theme-checkbox');
+            
+            if (themeCheckbox) {
+                themeCheckbox.addEventListener('change', function() {
+                    const newTheme = this.checked ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    
+                    // Zapisz preferencje użytkownika
+                    fetch('/api/user/settings', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({ theme: newTheme })
+                    });
+                });
+            }
+        });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

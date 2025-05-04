@@ -1,0 +1,595 @@
+/* 
+ * network_grid.css - System gridowy dla strony szczegółów sieci
+ * Elastyczny układ komponentów, który dobrze skaluje się na różnych urządzeniach
+ */
+
+/* System siatki */
+.grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.grid-row {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.grid-box {
+    flex: 1;
+    min-width: 0; /* Zapobiega przepełnieniu */
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-box-full {
+    flex: 100%;
+    width: 100%;
+}
+
+/* Widgety wewnątrz boxów */
+.widget {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.widget-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--widget-header-bg, rgba(0, 0, 0, 0.03));
+}
+
+.widget-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.widget-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-left: 0.5rem;
+}
+
+.widget-refresh {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: transform 0.2s;
+}
+
+.widget-refresh:hover {
+    color: var(--primary-color);
+    transform: rotate(30deg);
+}
+
+.widget-content {
+    padding: 1rem;
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Panel przycisków akcji */
+.network-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.network-actions .btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+}
+
+/* Komponenty statusu połączenia */
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.status-item {
+    padding: 1rem;
+    text-align: center;
+    background-color: rgba(52, 152, 219, 0.1);
+    border-radius: 8px;
+}
+
+.status-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.status-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* Wskaźniki prędkości */
+.speed-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.speed-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background-color: rgba(52, 152, 219, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.speed-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.speed-value {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--primary-color);
+}
+
+.speed-unit {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 0.5rem;
+}
+
+/* Historia prędkości */
+.history-chart-container {
+    margin-top: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.history-chart-container h3 {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.history-chart {
+    flex: 1;
+    background-color: rgba(52, 152, 219, 0.05);
+    border-radius: 8px;
+    padding: 0.5rem;
+    min-height: 150px;
+    position: relative;
+}
+
+/* Informacje o WiFi */
+.wifi-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+.wifi-info-item {
+    text-align: center;
+    padding: 0.75rem;
+    background-color: rgba(52, 152, 219, 0.1);
+    border-radius: 8px;
+}
+
+.wifi-info-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.wifi-info-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* Wskaźnik siły sygnału */
+.signal-strength-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.signal-strength-label {
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.signal-bars {
+    display: flex;
+    gap: 4px;
+    height: 30px;
+    align-items: flex-end;
+}
+
+.signal-bar {
+    width: 8px;
+    background-color: var(--border-color);
+    border-radius: 2px;
+}
+
+.signal-bar:nth-child(1) {
+    height: 25%;
+}
+
+.signal-bar:nth-child(2) {
+    height: 50%;
+}
+
+.signal-bar:nth-child(3) {
+    height: 75%;
+}
+
+.signal-bar:nth-child(4) {
+    height: 100%;
+}
+
+.signal-bar.active {
+    background-color: var(--primary-color);
+}
+
+/* Tabela urządzeń */
+.devices-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background-color: rgba(52, 152, 219, 0.05);
+    border-radius: 8px;
+}
+
+.search-box {
+    flex: 1;
+    max-width: 300px;
+}
+
+.devices-filters {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.devices-filters .btn {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    background-color: var(--card-bg);
+    color: var(--text-light);
+    border: 1px solid var(--border-color);
+}
+
+.devices-filters .btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.devices-table-container {
+    flex: 1;
+    overflow: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.network-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.network-table th, 
+.network-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.network-table th {
+    position: sticky;
+    top: 0;
+    background-color: var(--widget-header-bg, rgba(0, 0, 0, 0.03));
+    z-index: 10;
+}
+
+.network-table tr:hover {
+    background-color: rgba(52, 152, 219, 0.05);
+}
+
+/* Jakość połączenia */
+.quality-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.quality-item {
+    padding: 1rem;
+    background-color: rgba(52, 152, 219, 0.05);
+    border-radius: 8px;
+}
+
+.quality-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.quality-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.quality-meter {
+    height: 8px;
+    background-color: rgba(52, 152, 219, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.quality-meter-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 4px;
+    transition: width 0.5s ease-out;
+}
+
+#ping-meter {
+    background-color: var(--primary-color);
+}
+
+#jitter-meter {
+    background-color: var(--warning-color);
+}
+
+#packet-loss-meter {
+    background-color: var(--error-color);
+}
+
+/* Aktywność sieci */
+.activity-chart-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-chart {
+    flex: 1;
+    background-color: rgba(52, 152, 219, 0.05);
+    border-radius: 8px;
+    padding: 0.5rem;
+    min-height: 150px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.placeholder-message {
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* Modal testu prędkości */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    padding: 0;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-footer {
+    padding: 1rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-light);
+}
+
+.close:hover {
+    color: var(--error-color);
+}
+
+/* Test prędkości */
+.speed-test-container {
+    padding: 1rem 0;
+}
+
+.speed-test-status {
+    margin-bottom: 2rem;
+}
+
+.speed-test-phase {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.speed-test-progress {
+    height: 8px;
+    background-color: rgba(52, 152, 219, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    transition: width 0.3s ease-out;
+}
+
+.speed-test-results {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.result-item {
+    text-align: center;
+    flex: 1;
+}
+
+.result-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.result-value {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--primary-color);
+}
+
+.result-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+/* Responsywność */
+@media (max-width: 1200px) {
+    .grid-row {
+        flex-wrap: wrap;
+    }
+    
+    .grid-box {
+        min-width: 300px;
+        flex: 1 1 calc(50% - 1.5rem);
+    }
+    
+    .grid-box-full {
+        flex: 1 1 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-box {
+        flex: 1 1 100%;
+    }
+    
+    .status-grid, 
+    .speed-grid,
+    .wifi-info-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .devices-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+    }
+    
+    .search-box {
+        max-width: 100%;
+    }
+    
+    .speed-test-results {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .modal-content {
+        width: 90%;
+    }
+}
+
+/* Tryb ciemny */
+[data-theme="dark"] .widget {
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .widget-header {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="dark"] .status-item,
+[data-theme="dark"] .speed-item,
+[data-theme="dark"] .wifi-info-item,
+[data-theme="dark"] .quality-item {
+    background-color: rgba(52, 152, 219, 0.15);
+}
+
+[data-theme="dark"] .history-chart,
+[data-theme="dark"] .activity-chart {
+    background-color: rgba(52, 152, 219, 0.1);
+}

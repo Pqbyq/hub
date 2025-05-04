@@ -1,0 +1,347 @@
+/* Dodatkowe style dla ulepszonego widoku sieci */
+
+/* Style dla przycisków akcji na górze strony */
+.dashboard-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-actions .btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dashboard-actions .icon {
+    font-size: 1.2rem;
+}
+
+/* Style dla wykresów historii */
+.history-chart-container {
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+}
+
+.history-chart-container h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.history-chart {
+    width: 100%;
+    height: 200px;
+    background-color: rgba(52, 152, 219, 0.05);
+    border-radius: 8px;
+    position: relative;
+}
+
+.chart-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-light);
+}
+
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.legend-color {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+/* Style dla informacji o WiFi */
+.wifi-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.wifi-info-item {
+    text-align: center;
+    padding: 1rem;
+    background-color: rgba(52, 152, 219, 0.1);
+    border-radius: 8px;
+}
+
+.wifi-info-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.wifi-info-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* Wskaźnik siły sygnału WiFi */
+.signal-strength-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.signal-strength-label {
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.signal-bars {
+    display: flex;
+    gap: 4px;
+    height: 30px;
+    align-items: flex-end;
+}
+
+.signal-bar {
+    width: 8px;
+    background-color: var(--border-color);
+    border-radius: 2px;
+}
+
+.signal-bar:nth-child(1) {
+    height: 25%;
+}
+
+.signal-bar:nth-child(2) {
+    height: 50%;
+}
+
+.signal-bar:nth-child(3) {
+    height: 75%;
+}
+
+.signal-bar:nth-child(4) {
+    height: 100%;
+}
+
+.signal-bar.active {
+    background-color: var(--primary-color);
+}
+
+/* Ulepszone style dla tabeli urządzeń */
+.devices-card .card-body {
+    padding: 0;
+}
+
+.devices-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: rgba(52, 152, 219, 0.05);
+}
+
+.search-box {
+    flex: 1;
+    max-width: 300px;
+}
+
+.devices-filters {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.devices-filters .btn {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    background-color: var(--card-bg);
+    color: var(--text-light);
+    border: 1px solid var(--border-color);
+}
+
+.devices-filters .btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.network-table {
+    margin: 0;
+}
+
+.network-table th {
+    position: sticky;
+    top: 0;
+    background-color: var(--card-bg);
+    z-index: 10;
+}
+
+.device-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.device-name {
+    display: flex;
+    align-items: center;
+}
+
+.device-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Ulepszone mierniki jakości */
+.quality-meter {
+    height: 8px;
+    background-color: rgba(52, 152, 219, 0.1);
+    border-radius: 4px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+
+.quality-meter-bar {
+    height: 100%;
+    border-radius: 4px;
+    width: 0;
+    transition: width 0.5s ease-out;
+}
+
+#ping-meter {
+    background-color: var(--primary-color);
+}
+
+#jitter-meter {
+    background-color: var(--warning-color);
+}
+
+#packet-loss-meter {
+    background-color: var(--error-color);
+}
+
+/* Style dla modalu testu prędkości */
+.speed-test-container {
+    padding: 1rem 0;
+}
+
+.speed-test-status {
+    margin-bottom: 2rem;
+}
+
+.speed-test-phase {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.speed-test-progress {
+    height: 8px;
+    background-color: rgba(52, 152, 219, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    transition: width 0.3s ease-out;
+}
+
+.speed-test-results {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.result-item {
+    text-align: center;
+    flex: 1;
+}
+
+.result-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.result-value {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--primary-color);
+}
+
+.result-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+/* Checkbox style dla formularza */
+.device-favorite-group {
+    margin-top: 1rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .wifi-info-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .devices-actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .search-box {
+        max-width: 100%;
+    }
+    
+    .speed-test-results {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .network-table th:nth-child(3),
+    .network-table td:nth-child(3) {
+        display: none;
+    }
+}

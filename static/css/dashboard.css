@@ -1,0 +1,572 @@
+/* 
+ * dashboard.css - Style dla strony dashboardu aplikacji Domowy Hub
+ */
+
+ .dashboard-welcome {
+    margin-bottom: 2rem;
+}
+
+.dashboard-welcome h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-welcome p {
+    color: var(--text-light);
+}
+
+/* Widżety */
+.widget {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    height: 100%;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.widget:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--widget-header-bg);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin: -1.5rem -1.5rem 1rem -1.5rem;
+    padding: 1rem 1.5rem;
+}
+
+.widget-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.widget-refresh {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.widget-refresh:hover {
+    color: var(--primary-color);
+}
+
+/* Przycisk lokalizacji */
+.widget-location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-color);
+}
+
+.widget-location-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary-color);
+    font-size: 1rem;
+    transition: transform 0.2s;
+}
+
+.widget-location-btn:hover {
+    transform: scale(1.2);
+}
+
+/* Widżet pogodowy */
+.widget-weather {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: var(--text-color);
+}
+
+.weather-icon {
+    font-size: 3rem;
+    margin: 0.5rem 0;
+}
+
+.weather-icon img {
+    width: 64px;
+    height: 64px;
+}
+
+.weather-temp {
+    font-size: 3rem;
+    font-weight: 300;
+    margin: 0.5rem 0;
+}
+
+.weather-condition {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.weather-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.weather-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    background-color: rgba(52, 152, 219, 0.1);
+    padding: 0.75rem;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+[data-theme="dark"] .weather-item {
+    background-color: rgba(52, 152, 219, 0.2);
+}
+
+.weather-item-value {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.weather-item-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+/* Widżet czasu */
+.time-widget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.current-time {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin: 0.5rem 0;
+    color: var(--text-color);
+}
+
+.current-date {
+    font-size: 1.2rem;
+    color: var(--text-light);
+}
+
+/* Widżet statystyk sieciowych */
+.network-status {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.network-item {
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: rgba(52, 152, 219, 0.1);
+    transition: background-color 0.3s;
+}
+
+[data-theme="dark"] .network-item {
+    background-color: rgba(52, 152, 219, 0.2);
+}
+
+.network-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.network-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+/* Status widżetu - ładowanie */
+.widget-loading {
+    opacity: 0.7;
+    position: relative;
+}
+
+.widget-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+[data-theme="dark"] .widget-loading::after {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.loading-indicator {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(52, 152, 219, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Wyniki wyszukiwania */
+.city-results {
+    margin-top: 1rem;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.city-item {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: var(--text-color);
+}
+
+.city-item:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+[data-theme="dark"] .city-item:hover {
+    background-color: rgba(52, 152, 219, 0.2);
+}
+
+.city-item:last-child {
+    border-bottom: none;
+}
+
+.city-name {
+    font-weight: 500;
+}
+
+.city-country {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-left: 0.5rem;
+}
+
+.search-container {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.search-container .form-control {
+    flex: 1;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .weather-info {
+        flex-wrap: wrap;
+    }
+    
+    .weather-item {
+        flex-basis: 50%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .network-status {
+        grid-template-columns: 1fr;
+    }
+}
+/* Style dla kalendarza */
+.calendar-container {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.calendar {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.calendar th {
+    font-weight: 600;
+    padding: 0.5rem 0;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.calendar td {
+    padding: 0.5rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+    border-radius: 50%;
+    width: calc(100% / 7);
+    height: 2.2rem;
+    position: relative;
+}
+
+.calendar .day:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+    cursor: pointer;
+}
+
+.calendar .day.today {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+}
+
+.calendar .day.other-month {
+    color: var(--text-light);
+    opacity: 0.5;
+}
+.widget-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.widget-details-link {
+    color: var(--text-light);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s;
+    font-size: 1rem;
+}
+
+.widget-details-link:hover {
+    color: var(--primary-color);
+}
+/* Dodaj ten kod CSS do pliku dashboard.css */
+
+/* Nowy układ karty pogodowej */
+.weather-card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+    height: 100%;
+    position: relative;
+}
+
+/* Przyciski nawigacji */
+.weather-nav-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.3s, transform 0.2s;
+    z-index: 2;
+}
+
+.weather-nav-btn:hover {
+    color: var(--primary-color);
+    transform: scale(1.2);
+}
+
+.weather-nav-btn:disabled {
+    color: var(--border-color);
+    cursor: not-allowed;
+}
+
+.weather-nav-up {
+    margin-bottom: 0.3rem;
+}
+
+.weather-nav-down {
+    margin-top: 0.3rem;
+}
+
+/* Główna karta pogodowa */
+.weather-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s;
+    position: relative;
+    flex: 1;
+}
+
+/* Efekt uniesienia przy najechaniu */
+.weather-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Data na karcie */
+.weather-card-date {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+/* Zawartość karty */
+.weather-card-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem 0;
+}
+
+/* Ikona pogody */
+.weather-card-icon {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.weather-icon img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+/* Informacje o temperaturze */
+.weather-card-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.weather-temp {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.weather-condition {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Szczegóły pogody */
+.weather-card-details {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.weather-detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.weather-detail-icon {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.weather-detail-value {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.weather-detail-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+/* Animacja przewijania kart */
+@keyframes slideInUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slide-up {
+    animation: slideInUp 0.3s ease-out forwards;
+}
+
+.slide-down {
+    animation: slideInDown 0.3s ease-out forwards;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .weather-card-content {
+        flex-direction: column;
+    }
+    
+    .weather-temp {
+        font-size: 2rem;
+    }
+    
+    .weather-icon img {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+/* Ciemny motyw */
+[data-theme="dark"] .weather-card {
+    background-color: var(--card-bg);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .weather-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
